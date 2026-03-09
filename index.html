@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Ame</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#d1a5e3,#f7f3ff,#e29ef5);
+text-align:center;
+color:#4a3b6f;
+overflow-x:hidden;
+}
+
+h1,h2,h3{
+font-family:'Patrick Hand',cursive;
+}
+
+/* DOODLE FLOATERS */
+
+.doodle{
+position:fixed;
+font-size:22px;
+opacity:.6;
+pointer-events:none;
+animation:doodleFloat 18s linear infinite;
+}
+
+@keyframes doodleFloat{
+0%{transform:translateY(100vh) rotate(0deg);}
+100%{transform:translateY(-120vh) rotate(360deg);}
+}
+
+/* FIREWORKS */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* PAGE SYSTEM */
+
+.page{
+display:none;
+min-height:100vh;
+padding:30px;
+box-sizing:border-box;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.active{
+display:flex;
+}
+
+/* IMAGES */
+
+.page1img{
+width:450px;
+max-width:90%;
+border-radius:15px;
+}
+
+img{
+max-width:260px;
+border-radius:14px;
+}
+
+/* BUTTON */
+
+button{
+padding:12px 24px;
+margin:10px;
+border:none;
+border-radius:25px;
+background:#b79cff;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* HEARTS */
+
+.heart{
+position:fixed;
+bottom:-30px;
+font-size:24px;
+pointer-events:none;
+animation:floatUp 12s linear forwards;
+}
+
+@keyframes floatUp{
+
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-120vh);opacity:0;}
+
+}
+
+/* POLAROID PAGE */
+
+.polaroidPage{
+position:relative;
+height:100vh;
+background:radial-gradient(circle,#ffffff 60%,#ecbefd);
+overflow:hidden;
+}
+
+.centerText{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:48px;
+color:#ff4fa3;
+text-shadow:3px 3px 0 #ffd93d,-2px -2px 0 #7a5cff;
+font-family:'Patrick Hand',cursive;
+}
+
+.doodles{
+font-size:28px;
+letter-spacing:10px;
+}
+
+/* POLAROIDS */
+
+.polaroid{
+width:180px;
+height:220px;
+background:white;
+padding:12px;
+box-shadow:0 12px 25px rgba(0,0,0,.25);
+position:absolute;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.polaroid img{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:6px;
+}
+
+.polaroid::before{
+content:"";
+position:absolute;
+top:-6px;
+left:-6px;
+width:60px;
+height:18px;
+background:linear-gradient(45deg,#ff6ec7,#ffd93d,#7a5cff);
+transform:rotate(-35deg);
+border-radius:4px;
+}
+
+/* POSITIONS */
+
+.p1{top:6%;left:45%;transform:rotate(-6deg);}
+.p2{top:40%;left:6%;transform:rotate(5deg);}
+.p3{top:40%;right:6%;transform:rotate(-4deg);}
+.p4{bottom:6%;left:45%;transform:rotate(3deg);}
+.p5{top:10%;right:12%;transform:rotate(-7deg);}
+
+/* BALLOONS */
+
+.balloon{
+position:absolute;
+font-size:28px;
+animation:float 6s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0);}
+}
+
+/* CAMERA */
+
+video{
+width:260px;
+border-radius:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.centerText{font-size:28px;}
+
+.polaroid{
+width:120px;
+height:150px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+<source src="Audio/Kunjikkavil_Meghame_lyrics_malayalam_johnpaulgeorge_soorajsanthosh_vinayaksasikumar_aashan_256KBPS (online-audio-converter.com).mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<!-- PAGE 1 -->
+
+<div class="page active" id="page1">
+
+<img src="images/kitten_1-removebg-preview.png" class="page1img">
+
+<h2>Hey I made something for you😁<br>Do you want to see it?</h2>
+
+<button onclick="nextPage(3)">Yes</button>
+<button onclick="nextPage(2)">No</button>
+
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page" id="page2">
+
+<img src="images/image-removebg-preview.png" class="page1img">
+
+<h2>How dare you deny it 😤<br>Now go back.....🤬#*%$</h2>
+
+<button onclick="nextPage(1)">Go Back😡</button>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page" id="page3">
+
+<img src="images/boca-removebg-preview.png" class="page1img">
+
+<h2>
+You have come this far... Good job<br>
+Proud of you<br>
+May this year belong to you
+</h2>
+
+<p>While we are at this lets take a pic 🥰</p>
+
+<button onclick="nextPage(4);startCamera()">📷 Cheese</button>
+
+</div>
+
+<!-- CAMERA PAGE -->
+
+<div class="page" id="page4">
+
+<video id="camera" autoplay></video>
+
+<br>
+
+<button onclick="capture()">Capture Photo</button>
+
+<button onclick="nextPage(5)">Continue</button>
+
+</div>
+
+<!-- POLAROID PAGE -->
+
+<div class="page polaroidPage" id="page5">
+
+<div class="centerText">
+✨ 🫂Happy Birthday Gurlll....... ✨<br>
+<span class="doodles">💖 🎉 ⭐ 🎀</span>
+</div>
+
+<div class="polaroid p1"><img src="images/Ameena 1.jpeg"></div>
+<div class="polaroid p2"><img src="images/ameena 2.jpeg"></div>
+<div class="polaroid p3"><img src="images/ameena 3.jpeg"></div>
+<div class="polaroid p4"><img src="images/Screenshot 2025-08-26 214504.png"></div>
+<div class="polaroid p5"></div>
+
+<button style="position:absolute;bottom:25px;right:25px" onclick="nextPage(6)">Click Me</button>
+
+<div class="balloon" style="top:10%;left:20%">🎈</div>
+<div class="balloon" style="top:30%;right:15%">🎉</div>
+<div class="balloon" style="bottom:20%;left:30%">🎈</div>
+
+</div>
+
+<!-- PAGE 6 -->
+
+<div class="page" id="page6">
+
+<img src="images/output-onlinegiftools.gif" class="page1img">
+
+<h2>What is a birthday without a cake hmm...<br>How about we make the cake?</h2>
+
+<button onclick="nextPage(7)">Lets do it 🎂</button>
+
+</div>
+
+<!-- CAKE PAGE -->
+
+<div class="page polaroidPage" id="page7">
+
+<img src="images/birthday-cake.gif" class="page1img">
+
+<h2>Here is your cake..... 🎂</h2>
+
+<button onclick="nextPage(8)">Continue</button>
+
+</div>
+
+<!-- FINAL -->
+
+<div class="page" id="page8">
+
+<img src="images/patting.gif" class="page1img">
+
+<h2>😘Thank you for being born 💜</h2>
+<h3>May Allah accept all of your prayers and make you a successful person 🤲</h3>
+
+</div>
+
+<script>
+
+/* PAGE SWITCH */
+
+function nextPage(n){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+document.getElementById("page"+n).classList.add("active")
+}
+
+/* FLOATING DOODLES */
+
+const doodles=["⭐","✨","💖","🎈","🌸"]
+
+setInterval(()=>{
+let d=document.createElement("div")
+d.className="doodle"
+d.innerHTML=doodles[Math.floor(Math.random()*doodles.length)]
+d.style.left=Math.random()*100+"vw"
+d.style.fontSize=(20+Math.random()*20)+"px"
+document.body.appendChild(d)
+
+setTimeout(()=>{d.remove()},18000)
+},1500)
+
+/* HEARTS */
+
+setInterval(()=>{
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="💜"
+heart.style.left=Math.random()*100+"vw"
+document.body.appendChild(heart)
+setTimeout(()=>{heart.remove()},12000)
+},900)
+
+/* FIREWORKS */
+
+const canvas=document.getElementById("fireworks")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+const colors=["#ff4d6d","#ffd166","#06d6a0","#4cc9f0","#c77dff","#ffffff"]
+
+let particles=[]
+
+function explode(){
+let x=Math.random()*canvas.width
+let y=Math.random()*canvas.height/2
+let color=colors[Math.floor(Math.random()*colors.length)]
+
+for(let i=0;i<60;i++){
+particles.push({
+x:x,
+y:y,
+dx:(Math.random()-0.5)*6,
+dy:(Math.random()-0.5)*6,
+life:120,
+color:color
+})
+}
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach((p,i)=>{
+p.x+=p.dx
+p.y+=p.dy
+p.life--
+
+ctx.fillStyle=p.color
+ctx.beginPath()
+ctx.arc(p.x,p.y,2.5,0,Math.PI*2)
+ctx.fill()
+
+if(p.life<=0)particles.splice(i,1)
+
+})
+
+requestAnimationFrame(animate)
+}
+
+setInterval(explode,1300)
+animate()
+
+/* CAMERA */
+
+let video=document.getElementById("camera")
+
+function startCamera(){
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{video.srcObject=stream})
+}
+
+function capture(){
+
+let canvas=document.createElement("canvas")
+canvas.width=video.videoWidth
+canvas.height=video.videoHeight
+
+let ctx=canvas.getContext("2d")
+ctx.drawImage(video,0,0)
+
+let img=canvas.toDataURL()
+
+addPolaroid(img)
+
+}
+
+/* POLAROID */
+
+function addPolaroid(img){
+
+let slots=document.querySelectorAll(".polaroid")
+
+for(let s of slots){
+
+if(s.innerHTML==""){
+s.innerHTML="<img src='"+img+"'>"
+break
+}
+
+}
+
+}
+
+/* MUSIC START AFTER TOUCH */
+
+const music=document.getElementById("bgMusic")
+
+function startMusic(){
+music.play()
+}
+
+document.addEventListener("click",startMusic,{once:true})
+document.addEventListener("touchstart",startMusic,{once:true})
+
+</script>
+
+</body>
+</html>
