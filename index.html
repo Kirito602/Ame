@@ -201,21 +201,23 @@ border-radius:12px;
 @media(max-width:600px){
 
 .centerText{
-font-size:32px;
+font-size:22px;
 }
 
 .polaroid{
-width:150px;
-height:180px;
+width:95px;
+height:120px;
 }
 
 .page1img{
-width:300px;
+width:250px;
 }
 
 button{
-font-size:18px;
-padding:16px 30px;
+font-size:16px;
+padding:14px 24px;
+}
+
 }
 
 /* SCALE ENTIRE POLAROID PAGE */
@@ -405,14 +407,10 @@ addPolaroid(c.toDataURL())
 }
 
 function addPolaroid(img){
-let slots=document.querySelectorAll(".polaroid")
-for(let s of slots){
-if(s.innerHTML===""){
-s.innerHTML="<img src='"+img+"'>"
-break
+let slots=document.querySelectorAll(".p5")
+slot.innerHTML="<img src='"+img+"'>"
 }
-}
-}
+
 
 /* MUSIC START ON TOUCH */
 
@@ -429,3 +427,4 @@ document.addEventListener("touchstart",startMusic,{once:true})
 
 </body>
 </html>
+
