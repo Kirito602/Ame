@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +22,7 @@ h1,h2,h3{
 font-family:'Patrick Hand',cursive;
 }
 
-/* DOODLE FLOATERS */
+/* DOODLES */
 
 .doodle{
 position:fixed;
@@ -47,12 +46,12 @@ left:0;
 z-index:-1;
 }
 
-/* PAGE SYSTEM */
+/* PAGE */
 
 .page{
 display:none;
 min-height:100vh;
-padding:30px;
+padding:25px;
 box-sizing:border-box;
 justify-content:center;
 align-items:center;
@@ -66,8 +65,8 @@ display:flex;
 /* IMAGES */
 
 .page1img{
-width:450px;
-max-width:90%;
+width:420px;
+max-width:95%;
 border-radius:15px;
 }
 
@@ -79,13 +78,13 @@ border-radius:14px;
 /* BUTTON */
 
 button{
-padding:12px 24px;
+padding:14px 28px;
 margin:10px;
 border:none;
 border-radius:25px;
 background:#b79cff;
 color:white;
-font-size:16px;
+font-size:17px;
 cursor:pointer;
 transition:.2s;
 }
@@ -105,10 +104,8 @@ animation:floatUp 12s linear forwards;
 }
 
 @keyframes floatUp{
-
 0%{transform:translateY(0);opacity:1;}
 100%{transform:translateY(-120vh);opacity:0;}
-
 }
 
 /* POLAROID PAGE */
@@ -128,7 +125,6 @@ transform:translate(-50%,-50%);
 font-size:48px;
 color:#ff4fa3;
 text-shadow:3px 3px 0 #ffd93d,-2px -2px 0 #7a5cff;
-font-family:'Patrick Hand',cursive;
 }
 
 .doodles{
@@ -195,7 +191,8 @@ animation:float 6s infinite ease-in-out;
 /* CAMERA */
 
 video{
-width:260px;
+width:85%;
+max-width:350px;
 border-radius:12px;
 }
 
@@ -203,11 +200,20 @@ border-radius:12px;
 
 @media(max-width:600px){
 
-.centerText{font-size:28px;}
+.centerText{font-size:30px;}
 
 .polaroid{
-width:120px;
-height:150px;
+width:130px;
+height:160px;
+}
+
+.page1img{
+width:280px;
+}
+
+button{
+font-size:18px;
+padding:16px 30px;
 }
 
 }
@@ -266,7 +272,7 @@ May this year belong to you
 
 </div>
 
-<!-- CAMERA PAGE -->
+<!-- CAMERA -->
 
 <div class="page" id="page4">
 
@@ -285,7 +291,7 @@ May this year belong to you
 <div class="page polaroidPage" id="page5">
 
 <div class="centerText">
-✨ 🫂Happy Birthday Gurlll....... ✨<br>
+✨ 🫂Happy Birthday Gurlll ✨<br>
 <span class="doodles">💖 🎉 ⭐ 🎀</span>
 </div>
 
@@ -303,7 +309,7 @@ May this year belong to you
 
 </div>
 
-<!-- PAGE 6 -->
+<!-- CAKE -->
 
 <div class="page" id="page6">
 
@@ -315,8 +321,6 @@ May this year belong to you
 
 </div>
 
-<!-- CAKE PAGE -->
-
 <div class="page polaroidPage" id="page7">
 
 <img src="images/birthday-cake.gif" class="page1img">
@@ -326,8 +330,6 @@ May this year belong to you
 <button onclick="nextPage(8)">Continue</button>
 
 </div>
-
-<!-- FINAL -->
 
 <div class="page" id="page8">
 
@@ -347,7 +349,7 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 document.getElementById("page"+n).classList.add("active")
 }
 
-/* FLOATING DOODLES */
+/* DOODLES */
 
 const doodles=["⭐","✨","💖","🎈","🌸"]
 
@@ -358,7 +360,6 @@ d.innerHTML=doodles[Math.floor(Math.random()*doodles.length)]
 d.style.left=Math.random()*100+"vw"
 d.style.fontSize=(20+Math.random()*20)+"px"
 document.body.appendChild(d)
-
 setTimeout(()=>{d.remove()},18000)
 },1500)
 
@@ -378,53 +379,12 @@ setTimeout(()=>{heart.remove()},12000)
 const canvas=document.getElementById("fireworks")
 const ctx=canvas.getContext("2d")
 
+function resizeCanvas(){
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
-
-const colors=["#ff4d6d","#ffd166","#06d6a0","#4cc9f0","#c77dff","#ffffff"]
-
-let particles=[]
-
-function explode(){
-let x=Math.random()*canvas.width
-let y=Math.random()*canvas.height/2
-let color=colors[Math.floor(Math.random()*colors.length)]
-
-for(let i=0;i<60;i++){
-particles.push({
-x:x,
-y:y,
-dx:(Math.random()-0.5)*6,
-dy:(Math.random()-0.5)*6,
-life:120,
-color:color
-})
 }
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-particles.forEach((p,i)=>{
-p.x+=p.dx
-p.y+=p.dy
-p.life--
-
-ctx.fillStyle=p.color
-ctx.beginPath()
-ctx.arc(p.x,p.y,2.5,0,Math.PI*2)
-ctx.fill()
-
-if(p.life<=0)particles.splice(i,1)
-
-})
-
-requestAnimationFrame(animate)
-}
-
-setInterval(explode,1300)
-animate()
+resizeCanvas()
+window.addEventListener("resize",resizeCanvas)
 
 /* CAMERA */
 
@@ -433,46 +393,34 @@ let video=document.getElementById("camera")
 function startCamera(){
 navigator.mediaDevices.getUserMedia({video:true})
 .then(stream=>{video.srcObject=stream})
+.catch(()=>alert("Camera permission needed"))
 }
 
 function capture(){
-
-let canvas=document.createElement("canvas")
-canvas.width=video.videoWidth
-canvas.height=video.videoHeight
-
-let ctx=canvas.getContext("2d")
-ctx.drawImage(video,0,0)
-
-let img=canvas.toDataURL()
-
-addPolaroid(img)
-
+let c=document.createElement("canvas")
+c.width=video.videoWidth
+c.height=video.videoHeight
+let x=c.getContext("2d")
+x.drawImage(video,0,0)
+addPolaroid(c.toDataURL())
 }
 
-/* POLAROID */
-
 function addPolaroid(img){
-
 let slots=document.querySelectorAll(".polaroid")
-
 for(let s of slots){
-
 if(s.innerHTML==""){
 s.innerHTML="<img src='"+img+"'>"
 break
 }
-
+}
 }
 
-}
-
-/* MUSIC START AFTER TOUCH */
+/* MUSIC */
 
 const music=document.getElementById("bgMusic")
 
 function startMusic(){
-music.play()
+music.play().catch(()=>{})
 }
 
 document.addEventListener("click",startMusic,{once:true})
@@ -482,5 +430,7 @@ document.addEventListener("touchstart",startMusic,{once:true})
 
 </body>
 </html>
+
+
 
 
